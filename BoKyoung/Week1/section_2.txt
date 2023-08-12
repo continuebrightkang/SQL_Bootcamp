@@ -1,0 +1,118 @@
+### CODES
+
+SELECT * FROM film;
+SELECT * FROM actor;
+SELECT first_name FROM actor;
+SELECT first_name, last_name FROM actor;
+select first_name, last_name from actor;
+select first_name, last_name, email from customer;
+select * from film;
+select distinct (release_year) from film;
+select distinct (rental_rate) from film;
+select distinct rating from film;
+
+select * from customer
+where first_name='Jared';
+
+select * from film
+where rental_rate > 4;
+
+select * from film
+where rental_rate > 4 and replacement_cost >= 19.99;
+
+select * from film
+where rental_rate > 4 and replacement_cost >= 19.99
+and rating='R';
+
+select count(title) from film
+where rental_rate > 4 and replacement_cost >= 19.99
+and rating='R';
+
+select count(*) from film
+where rating = 'R' or rating = 'PG-13';
+
+select count(title) from film
+where rating = 'R' or rating = 'PG-13';
+
+select count(*) from film
+where rating != 'R';
+
+select * from film
+where rating != 'R';
+
+select email from customer
+where first_name='Nancy'
+and last_name='Thomas';
+
+select description from film
+where title = 'Outlaw Hanky';
+
+select description from film
+
+select phone from address
+where address = '259 Ipoh Drive'
+
+select * from payment
+order by payment_date;
+
+select * from payment
+order by payment_date DESC;
+
+select * from payment
+order by payment_date DESC;
+limit 5
+
+select * from payment
+where amount != 0.00
+order by payment_date DESC
+limit 5
+
+select count (*) from payment
+where amount not between 8 and 9;
+
+select * from payment
+where payment_date between '2007-02-01' and '2007-02-15'
+
+select distinct (amount) from payment
+order by amount
+
+select amount from payment
+where amount in (0.99, 1.98, 1.99)
+
+select amount from payment
+where amount not in (0.99, 1.98, 1.99)
+
+select * from customer
+where first_name in ('John', 'Jake', 'Julie')
+
+select * from customer
+where first_name not in ('John', 'Jake', 'Julie')
+
+select * from customer
+where first_name like 'J%'
+
+select * from customer
+where first_name like 'J%' and last_name like 'S%'
+
+select * from customer
+where first_name like '%er%'
+
+select * from customer
+where first_name like '%her%'
+
+select * from customer
+where first_name like '_her%'
+
+select * from customer
+where first_name not like '_her%'
+
+select * from customer
+where first_name not like 'A%'
+
+select * from customer
+where first_name like 'A%'
+order by last_name
+
+select * from customer
+where first_name like 'A%' and last_name not like 'B%'
+order by last_name
