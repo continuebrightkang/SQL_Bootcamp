@@ -1,0 +1,56 @@
+# General Challenge1
+
+1
+SELECT COUNT(*) FROM payment
+WHERE amount >5;
+
+2
+SELECT COUNT(actor_id) FROM actor
+WHERE first_name LIKE 'P%';
+
+3
+SELECT COUNT(DISTINCT district) FROM address;
+
+4
+SELECT DISTINCT district FROM address;
+
+5
+SELECT COUNT(*) FROM film
+WHERE rating='R' AND
+replacement_cost BETWEEN 5 and 15;
+
+6
+SELECT COUNT(*) FROM film
+WHERE title LIKE '%Truman%';
+
+#GROUP BY Challenge
+1
+SELECT staff_id, COUNT(payment_id) 
+FROM payment
+GROUP BY staff_id
+
+2
+SELECT rating,ROUND(AVG(replacement_cost),2) 
+FROM film
+GROUP BY rating
+
+3
+SELECT customer_id,SUM(amount)
+FROM payment
+GROUP BY customer_id
+ORDER BY SUM(amount) DESC
+LIMIT 5;
+
+#HAVING Challenge
+1
+SELECT customer_id, COUNT(amount) 
+FROM payment
+GROUP BY customer_id
+HAVING COUNT(amount)>=40;
+
+2
+SELECT customer_id,SUM(amount) 
+FROM payment
+WHERE staff_id=2
+GROUP BY customer_id
+HAVING SUM(amount)>100;

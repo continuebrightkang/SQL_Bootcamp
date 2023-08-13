@@ -1,0 +1,246 @@
+<SQL>
+Structured Query Language
+
+: 데이터베이스와 소통하는 방식(프로그래밍 언어)
+
+- SELECT column_name FROM table_name
+
+select * : 모든 열 선택
+
+but 웬만하면 * 사용 x → 트래픽 증가
+
+구문 마지막 ;  → 없어도 됨 가독성 위해 사용
+
+- DISTINCT : 중복되는 것 없이 추출
+
+SELECT DISTINCT (column) FROM table;
+
+괄호 없어도 됨
+
+- COUNT : 행의 개수 반환 → 모든 열에 대해 결과 동일 (행 개수 셀 때 사용)
+
+괄호로 감싸줘야 함
+
+SELECT COUNT(name) FROM table;
+
+SELECT COUNT(DISTINCT name) FROM table; → 이렇게 결합해서 사용
+
+- SELECT WHERE(핵심)
+
+WHERE : 조건 지정 → 반환된 행 필터링(비교 연산자 사용)
+
+SELECT column1, column2
+
+FROM table
+
+WHERE conditions;(조건)
+
+Comparison Operators(<>, !=), Logical Operators(AND, OR , NOT)
+
+ex)
+
+SELECT * FROM customer
+WHERE first_name = 'Jared'
+
+- ORDER BY
+
+: 열 값을 기반으로 행 정렬 (오름차순/내림차순)
+
+SELECT column_1, column_2
+
+FROM table
+
+ORBDER BY column_1 ASC/DESC (구문 마지막에 사용)
+
+영어에 사용 → 알파벳 순 정렬
+
+ex)
+
+SELECT store_id,first_name,last_name FROM customer
+ORDER BY store_id DESC, first_name ASC;
+
+- LIMIT
+
+: 반환되는 행의 개수 제한
+
+order by와 함께 쓰면 매우 유용함
+
+구문의 마지막에 사용 (행이 몇 개 필요한가요?)
+
+→ head()와 유사
+
+ex)
+
+#의미 : 지불 기한이 최신인 것 5개를 추려서 보여줘라
+
+SELECT * FROM payment
+ORDER BY payment_date DESC
+LIMIT 5;
+
+(활용)
+
+#테이블의 레이아웃 파악용
+
+SELECT * FROM payment
+
+LIMIT 1;
+
+- SQL 명령어와 일치하는 이름은 피하기
+
+- BETWEEN
+
+값과 값 사이 (where와 같은 종류)
+
+value BETWEEN low AND high
+
+value NOT BETWEEN low AND high → 이렇게도 사용 가능
+
+#연도에도 사용가능
+
+ex) BETWEEN ‘2007-01-01’ AND ‘2007-02-01’
+
+BETWEEN을 date에서 timestamp 쓸 때 조심….???
+
+ex)
+
+SELECT COUNT(*) FROM payment
+WHERE amount BETWEEN 8 AND 9;
+
+- IN
+
+value IN (option1, option2, …)
+
+ex) SELECT color FROM table
+
+      WHERE color IN (’red’,’blue’,’green’)
+
+Name = ‘Jared’ 대신 사용 가능
+
+ex)
+
+SELECT COUNT(*) FROM payment
+WHERE amount IN(0.99,1.98,1.99)
+
+- LIKE and ILIKE (어려움)
+
+→ 문자열 데이터를 이용한 패턴 매칭 (wildcard 이용)
+
+1. Percent %
+
+: 문자 연속 매치
+
+1. Underscore _
+
+: 문자 하나 매치
+
+A% : A로 시작하는 모든 이름
+
+%a : A로 끝나는 모든 이름 (아무것도 없어도 됌)
+
+LIKE : 대소문자 구분 (case-sensitive)
+
+ILIKE : 대소문자 구분 X
+
+ex)
+
+#first_name이 J로 시작하는 것
+
+SELECT * FROM customer
+WHERE first_name LIKE 'J%'
+
+#first_name 어딘가에 ‘er’이 있는 것  → ‘Jennifer’,’Kimberly’
+
+SELECT * FROM customer
+WHERE first_name LIKE '%er%'
+
+- Aggregate Functions(집계 함수)의 종류
+
+AVG() : float형태 반환  
+
+COUNT() : 행의 수 반환하는 것임
+
+MAX()
+
+MIN()
+
+SUM()
+
+#Aggregate Function은 SELECT절, HAVING절에서만 일어남!
+
+ex)
+
+SELECT MIN(replacement_cost) FROM film;
+
+#가능
+
+SELECT MAX(replacement_cost), MIN(replacement_cost)
+FROM film;
+
+#불가능
+
+SELECT MAX(replacement_cost), title
+FROM film;
+
+- GROUP BY
+
+→ GROUP BY로 범주별로 묶은 후 Aggregate Function으로 다시 합침
+
+1. categorical column : 비연속적 / 숫자도 가능(ex. 1등석, 2등석, 3등석)
+2. Data Value
+
+SELECT category_col, AGG(data_col)
+
+FROM table
+
+(WHERE category_col ≠ A)
+
+GROUP BY category_col;
+
+→ GROUP BY는 FROM 이나 WHERE 바로 뒤에 와야 함
+
+SELECT company, division, SUM(sales)
+
+FROM finance_table
+
+GROUP BY company, division
+
+: company별, division별 sales의 총합
+
+timestamp group by 할 때는 DATE()함수 등 사용
+
+ex)
+
+SELECT DATE(payment_date),SUM(amount) FROM payment
+GROUP BY DATE(payment_date)
+ORDER BY SUM(amount) DESC
+
+- HAVING
+
+GROUP BY 뒤에 사용
+
+SELECT category_col, AGG(data_col)
+
+FROM table
+
+(WHERE category_col ≠ A)
+
+GROUP BY category_col;
+
+→ WHERE을 AGG(data_col)에 대해 사용하고 싶을 때 사용
+
+SELECT category_col, AGG(data_col)
+
+FROM table
+
+(WHERE category_col ≠ A)
+
+GROUP BY category_col;
+
+HAVING AGG(data_col)>1000
+
+ex)
+
+SELECT customer_id,SUM(amount)
+FROM payment
+GROUP BY customer_id
+HAVING SUM(amount)>100
