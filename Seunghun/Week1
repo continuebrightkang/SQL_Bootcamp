@@ -1,1 +1,122 @@
 
+<Ch2.19 Challenge: SELECT WHERE>
+#Challenge No 1
+SELECT email FROM customer
+WHERE first_name = 'Nancy' and last_name = 'Thomas'
+#Challenge No 2
+SELECT description FROM film
+WHERE title = 'Outlaw Hanky'
+#Challenge No 3
+SELECT phone FROM address
+WHERE address = '259 Ipoh Drive'
+
+<Ch2.20 ORDER BY>
+#Basic framework 
+Select colunm1, column_2 FROM table
+ORDER BY colunm_1, ASC/DESC 
+## ORDER BY goes at the end, defaule is ascending 
+
+# Exercise
+SELECT * FROM customer
+ORDER BY first_name 
+SELECT * FROM customer
+ORDER BY store_id 
+SELECT store_id, first_name, last_name FROM customer
+ORDER BY store_id 
+SELECT store_id, first_name, last_name FROM customer
+ORDER BY store_id, first_name 
+
+<Ch2.21 Limit>
+Limit rows that are given as the output
+SELECT * FROM payment
+ORDER BY payment_date DESC
+LIMIT 5
+SELECT * FROM payment 
+WHERE amount != '0'
+ORDER BY payment_date DESC
+LIMIT 5
+
+<Ch2.22 Challenge: ORDER BY>
+# Challenge Task No 1
+Want to reward first 10 paying customer, what are the id
+SELECT customer_id FROM payment
+ORDER BY payment_date
+LIMIT 10;
+# Challenge Task No 2
+Want to rent a short video, what are the title of shortest 5 movies
+SELECT title, length FROM film
+ORDER BY length 
+LIMIT 5;
+## catch to a length, there can exist duplicate entries outside the limit boundaries
+# Challenge Task No 3
+movies with 50min or less
+SELECT COUNT(title) FROM film
+WHERE length <= 50
+
+<Ch2.23 Between>
+#just a combination of two comparison operator, exclusive boundaries for not
+#Practice
+SELECT COUNT(*) FROM payment
+WHERE amount BETWEEN 8 AND 9;
+SELECT COUNT(*) FROM payment
+WHERE amount NOT BETWEEN 8 AND 9;
+SELECT * FROM payment
+WHERE payment_date BETWEEN '2007-02-01' AND '2007-02-15';
+SELECT * FROM payment
+WHERE payment_date BETWEEN '2007-02-01' AND '2007-02-14';
+## check for 0:00 mark
+
+<Ch2.24 IN>
+#Combining conditions in WHERE 
+SELECT COUNT(*) FROM payment 
+WHERE amount NOT IN (0.99,1.98,1.99)
+SELECT COUNT(*) FROM payment 
+WHERE amount (0.99,1.98,1.99)
+SELECT * FROM customer
+WHERE first_name IN ('John','Jake')
+
+<Ch2.25 LIKE, ILIKE>
+# pattern matching %-multimple wildcard/ _ -single wildcard, %_ can be blank
+# Practice
+SELECT * FROM customer
+WHERE first_name LIKE 'J%'
+SELECT * FROM customer
+WHERE first_name LIKE 'J%' AND last_name LIKE 'S%'
+## Always rememebr case sensitivity of LIKE
+SELECT * FROM customer
+WHERE first_name ILIKE 'j%' AND last_name ILIKE 's%'
+SELECT * FROM customer
+WHERE first_name ILIKE '_her%' 
+SELECT * FROM customer
+WHERE first_name NOT LIKE '_her%' 
+SELECT * FROM customer
+WHERE first_name LIKE 'A%' 
+ORDER BY last_name
+SELECT * FROM customer
+WHERE first_name LIKE 'A%' AND last_name NOT LIKE 'B%'
+ORDER BY last_name
+
+<Ch2.26 GENERAL Challenge>
+#1
+SELECT COUNT(amount) FROM payment
+WHERE amount > 5;
+#2
+SELECT COUNT(first_name) FROM actor
+WHERE first_name LIKE 'P%'
+#3#4
+SELECT COUNT (DISTINCT(district)) FROM address;
+SELECT DISTINCT(district) FROM address;
+#5
+SELECT  COUNT(*) FROM film
+WHERE rating = 'R' 
+AND replacement_cost BETWEEN 5 AND 15
+#6
+SELECT  COUNT(title) FROM film
+WHERE title ILIKE '%Truman%'
+
+
+
+
+
+
+
