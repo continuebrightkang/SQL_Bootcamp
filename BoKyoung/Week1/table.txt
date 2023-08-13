@@ -1,15 +1,41 @@
 SQL	        Explanation
-SELECT	-
+
+SELECT	        -
+
 DISTINCT	Uniqueness
-WHERE	Being specific (with conditions)
-        AND / OR / NOT
-COUNT	Count number of rows
+
+WHERE	        Being specific (with conditions)
+                AND / OR / NOT
+        
+COUNT	        Count number of rows
+
 ORDER BY	Order
-DESC / ASC
-LIMIT	Top N (head)
+                DESC / ASC
+
+LIMIT	        Top N (head)
+
 BETWEEN / NOT BETWEEN	low AND high
                         Timestamp → 02-14 → To day 13 23:59:59
+
 IN / NOT IN	WHERE in specific condition
-LIKE	% → A% → Begin with A
-        _ → Mission Impossible _ → Only one chr allowed
-ILIKE	Case insensitive
+
+LIKE	        % → A% → Begin with A
+                _ → Mission Impossible _ → Only one chr allowed
+
+ILIKE	        Case insensitive
+
+Aggregate Funcs	Only SELECT / HAVING
+                AVG / SUM / MAX / MIN / COUNT / ROUND etc
+
+GROUP BY	Group for aggregate funcs
+                After FROM / WHERE
+                SELECT ↔ GROUP BY referring called columns
+
+HAVING	        After GROUP BY
+                Additional filter for aggregate funcs
+
+순서	         SELECT ~ FROM ~
+                WHERE ~ (Not agg func)
+                GROUP BY ~ (Referring called columns)
+                HAVING ~ (Agg func)
+                ORDER BY ~
