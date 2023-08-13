@@ -1,4 +1,3 @@
-
 <Ch2.19 Challenge: SELECT WHERE>
 #Challenge No 1
 SELECT email FROM customer
@@ -113,6 +112,70 @@ AND replacement_cost BETWEEN 5 AND 15
 #6
 SELECT  COUNT(title) FROM film
 WHERE title ILIKE '%Truman%'
+
+<CH3.28 Aggregate Functions>
+#Aggregate function: take multiple input and return single output EX:AVG,COUNT,MAX,MIN,SUM
+SELECT MAX(replacement_cost) FROM film;
+SELECT Min(replacement_cost) FROM film;
+SELECT MAX(replacement_cost), MIN(replacement_cost) FROM film;
+SELECT COUNT(*) FROM film
+SELECT AVG(replacement_cost) FROM film
+SELECT ROUND(AVG(replacement_cost),2) FROM film
+SELECT SUM(replacement_cost) FROM film;
+
+<CH3.29,30 GROUP BY>
+##performs task by some category
+SELECT customer_id FROM payment
+GROUP BY customer_id
+SELECT customer_id FROM payment
+GROUP BY customer_id ORDER BY customer_id
+SELECT customer_id, SUM(amount) FROM payment
+GROUP BY customer_id 
+ORDER BY SUM(amount) DESC/ASC
+SELECT customer_id, COUNT(amount) FROM payment
+GROUP BY customer_id 
+ORDER BY COUNT(amount) DESC
+SELECT DATE(payment_date) FROM payment ## remove timestamp
+SELECT DATE(payment_date),SUM(amount) FROM payment
+GROUP BY DATE(payment_date)
+ORDER BY SUM(amount)
+
+<CH3.31 Challengy: GROUP BY>
+#1
+SELECT staff_id, COUNT(staff_id) FROM payment
+GROUP BY Staff_id
+#2
+SELECT rating, AVG(replacement_cost) FROM film
+GROUP BY rating
+#3
+SELECT customer_id, SUM(amount) FROM payment
+GROUP BY customer_id
+ORDER BY SUM(amount) DESC
+LIMIT 5
+
+<CH3.32 Having>
+#Filer based on aggregate functions
+SELECT customer_id, SUM(amount) FROM payment 
+GROUP BY customer_id
+HAVING SUM(amount)>100
+SELECT store_id, COUNT(Store_id) FROM customer
+GROUP BY store_id
+SELECT store_id, COUNT(store_id) FROM customer
+GROUP BY store_id
+HAVING COUNT(store_id)> 300
+
+<CH3.33 Challengy: HAVING>
+#1
+SELECT customer_id, COUNT(customer_id) FROM payment
+GROUP BY customer_id HAVING COUNT(customer_id)>=40
+#2
+SELECT customer_id, SUM(amount) FROM payment
+WHERE staff_id = 2 
+GROUP BY customer_id HAVING SUM(amount)>=100
+
+
+
+
 
 
 
